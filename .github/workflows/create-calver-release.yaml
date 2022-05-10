@@ -20,7 +20,7 @@ jobs:
       contents: write
       pull-requests: read
     outputs:
-      version: ${{ steps.get-latest-tag.outputs.tag }}
+      version: ${{ steps.bump-calver.outputs.new_version }}
       changelog: ${{ steps.changelog.outputs.changelog }}
     steps:
       - uses: actions/checkout@v3
@@ -55,6 +55,6 @@ jobs:
         with:
           tag_name: ${{ steps.bump-calver.outputs.new_version }}
           release_name: ${{ steps.bump-calver.outputs.new_version }}
-          body: ${{steps.changelog.outputs.changelog}}
+          body: ${{ steps.changelog.outputs.changelog }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
