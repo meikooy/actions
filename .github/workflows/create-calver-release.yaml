@@ -8,10 +8,10 @@ on:
     outputs:
       version:
         description: "New version tag"
-        value: ${{ jobs.create_release.outputs.version }}
+        value: ${{ jobs.create-release.outputs.version }}
       changelog:
         description: "Changelog contents"
-        value: ${{ jobs.create_release.outputs.changelog }}
+        value: ${{ jobs.create-release.outputs.changelog }}
 
 jobs:
   create-release:
