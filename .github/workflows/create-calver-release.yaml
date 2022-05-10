@@ -5,9 +5,6 @@ on:
     inputs:
       configuration:
         type: string
-    secrets:
-      GITHUB_TOKEN:
-        required: true
     outputs:
       version:
         description: "New version tag"
