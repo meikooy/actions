@@ -1,0 +1,63 @@
+name: Create CalVer release
+
+on:
+  workflow_call:
+    inputs:
+      configuration:
+        type: string
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+    outputs:
+      version:
+        description: "New version tag"
+        value: ${{ jobs.create_release.outputs.version }}
+      changelog:
+        description: "Changelog contents"
+        value: ${{ jobs.create_release.outputs.changelog }}
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    outputs:
+      version: ${{ steps.get-latest-tag.outputs.tag }}
+      changelog: ${{ steps.changelog.outputs.changelog }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get latest tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+
+      - name: Bump version
+        uses: ShotaKitazawa/action-bump-calver@v1.0.0
+        id: bump-calver
+        with:
+          current_version: ${{ steps.get-latest-tag.outputs.tag }}
+
+      - name: Push tag
+        uses: actions-ecosystem/action-push-tag@v1
+        with:
+          tag: ${{ steps.bump-calver.outputs.new_version }}
+          message: "${{ steps.bump-calver.outputs.new_version }}"
+
+      - name: Build changelog
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v3.0.0-rc01
+        with:
+          toTag: ${{ steps.bump-calver.outputs.new_version }}
+          configuration: ${{ inputs.configuration }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.bump-calver.outputs.new_version }}
+          release_name: ${{ steps.bump-calver.outputs.new_version }}
+          body: ${{steps.changelog.outputs.changelog}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
