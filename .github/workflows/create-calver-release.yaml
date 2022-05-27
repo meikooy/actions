@@ -45,6 +45,7 @@ jobs:
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v3.0.0-rc01
         with:
+          fromTag: ${{ steps.get-latest-tag.outputs.tag }}
           toTag: ${{ steps.bump-calver.outputs.new_version }}
           configuration: ${{ inputs.configuration }}
         env:
