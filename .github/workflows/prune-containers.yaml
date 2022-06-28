@@ -1,0 +1,31 @@
+name: Prune containers
+
+on:
+  workflow_call:
+    inputs:
+      container:
+        type: string
+        required: true
+        description: "Container name without organization"
+      older-than:
+        type: number
+        default: 14
+        description: "Prune containers older than X days"
+      keep-last:
+        type: number
+        default: 3
+        description: "Keep last X containers"
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prune GHCR containers
+        uses: vlaurin/action-ghcr-prune@v0.4.0
+        with:
+          token: ${{ secrets.GHCR_PRUNE_TOKEN }}
+          organization: meikooy
+          container: ${{ inputs.container }}
+          older-than: ${{ inputs.older-than }}
+          keep-last: ${{ inputs.keep-last }}
+          untagged: true
