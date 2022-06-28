@@ -15,6 +15,10 @@ on:
         type: number
         default: 3
         description: "Keep last X containers"
+    secrets:
+      token:
+        required: true
+        description: "Private access token with packages read/delete permission"
 
 jobs:
   prune:
@@ -23,7 +27,7 @@ jobs:
       - name: Prune GHCR containers
         uses: vlaurin/action-ghcr-prune@v0.4.0
         with:
-          token: ${{ secrets.GHCR_PRUNE_TOKEN }}
+          token: ${{ secrets.TOKEN }}
           organization: meikooy
           container: ${{ inputs.container }}
           older-than: ${{ inputs.older-than }}
