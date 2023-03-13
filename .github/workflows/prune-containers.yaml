@@ -30,6 +30,6 @@ jobs:
           token: ${{ secrets.TOKEN }}
           organization: meikooy
           container: ${{ inputs.container }}
-          older-than: ${{ inputs.older-than }}
+          keep-younger-than: ${{ inputs.older-than }}
           keep-last: ${{ inputs.keep-last }}
-          untagged: true
+          prune-untagged: true
