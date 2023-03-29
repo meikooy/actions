@@ -40,7 +40,7 @@ jobs:
           current_version: ${{ steps.get-latest-tag.outputs.tag }}
 
       - name: Push tag
-        uses: actions-ecosystem/action-push-tag@v1
+        uses: thejeff77/action-push-tag@v1
         with:
           tag: ${{ steps.bump-calver.outputs.new_version }}
           message: "${{ steps.bump-calver.outputs.new_version }}"
