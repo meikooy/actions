@@ -24,12 +24,12 @@ jobs:
   prune:
     runs-on: ubuntu-latest
     steps:
-      - name: Prune GHCR containers
-        uses: vlaurin/action-ghcr-prune@v0.5.0
+      - name: Container Retention Policy
+        uses: snok/container-retention-policy@v2.2.1
         with:
           token: ${{ secrets.TOKEN }}
-          organization: meikooy
-          container: ${{ inputs.container }}
-          keep-younger-than: ${{ inputs.older-than }}
-          keep-last: ${{ inputs.keep-last }}
-          prune-untagged: true
+          account-type: org
+          org-name: meikooy
+          image-names: ${{ inputs.container }}
+          cut-off: ${{ inputs.older-than }} days ago UTC
+          keep-at-least: ${{ inputs.keep-last }}
