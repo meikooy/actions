@@ -1,5 +1,23 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
+        ":semanticPrefixFixDepsChoreOthers",
+        "group:recommended",
+        "workarounds:all",
+        ":rebaseStalePrs",
+        ":maintainLockFilesWeekly",
+        ":automergeDigest",
+        ":automergePatch",
+        ":semanticCommits",
+        ":preserveSemverRanges"
+    ],
+    "labels": [
+        "dependencies"  
+    ],
+    "packageRules": [
+        {
+            "matchUpdateTypes": ["lockFileMaintenance"],
+            "automerge": true
+        }
     ]
 }
