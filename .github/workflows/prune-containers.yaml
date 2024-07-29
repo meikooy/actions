@@ -25,11 +25,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Container Retention Policy
-        uses: snok/container-retention-policy@v2.2.1
+        uses: snok/container-retention-policy@v3.0.0
         with:
           token: ${{ secrets.TOKEN }}
-          account-type: org
-          org-name: meikooy
+          account: meikooy
           image-names: ${{ inputs.container }}
-          cut-off: ${{ inputs.older-than }} days ago UTC
+          cut-off: ${{ inputs.older-than }}d
           keep-at-least: ${{ inputs.keep-last }}
