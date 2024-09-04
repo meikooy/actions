@@ -9,7 +9,7 @@ on:
         description: "Container name without organization"
       older-than:
         type: number
-        default: 14
+        default: 60
         description: "Prune containers older than X days"
       keep-last:
         type: number
