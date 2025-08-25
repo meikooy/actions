@@ -1,5 +1,7 @@
 name: Prune containers
 
+description: Prune *un-tagged* versions of a GHCR package
+
 on:
   workflow_call:
     inputs:
@@ -9,12 +11,13 @@ on:
         description: "Container name without organization"
       older-than:
         type: number
-        default: 60
+        default: 7
         description: "Prune containers older than X days"
       keep-last:
         type: number
-        default: 3
-        description: "Keep last X containers"
+        default: 5
+        description: "Keep last X un-tagged versions"
+      
     secrets:
       token:
         required: true
@@ -24,13 +27,12 @@ jobs:
   prune:
     runs-on: ubuntu-latest
     steps:
-      - name: Container Retention Policy
-        uses: snok/container-retention-policy@v3.0.0
+      - name: Container cleanup
+        uses: dataaxiom/ghcr-cleanup-action@v1
         with:
           token: ${{ secrets.TOKEN }}
-          account: meikooy
-          image-names: ${{ inputs.container }}
-          image-tags: ${{ inputs.image-tags }}
-          tag-selection: ${{ inputs.tag-selection }}
-          cut-off: ${{ inputs.older-than }}d
-          keep-n-most-recent: ${{ inputs.keep-last }}
+          owner: meikooy
+          package: ${{ inputs.container }}
+          older-than: ${{ inputs.older-than }} days
+          keep-n-untagged: ${{ inputs.keep-last }}
+          
