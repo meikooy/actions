@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Container cleanup
-        # verified & trusted version
+        # Verified & trusted version - we need to make sure we can trust this, since the action needs read access to all private repos, and github is really crappy and won't offer a scope for personal access tokens to have just simple read-only access to private repos.
         uses: dataaxiom/ghcr-cleanup-action@v1.0.16
         with:
           token: ${{ secrets.TOKEN }}
