@@ -30,5 +30,7 @@ jobs:
           token: ${{ secrets.TOKEN }}
           account: meikooy
           image-names: ${{ inputs.container }}
+          image-tags: ${{ inputs.image-tags }}
+          tag-selection: ${{ inputs.tag-selection }}
           cut-off: ${{ inputs.older-than }}d
-          keep-at-least: ${{ inputs.keep-last }}
+          keep-n-most-recent: ${{ inputs.keep-last }}
