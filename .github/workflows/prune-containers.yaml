@@ -28,7 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Container cleanup
-        uses: dataaxiom/ghcr-cleanup-action@v1
+        # verified & trusted version
+        uses: dataaxiom/ghcr-cleanup-action@v1.0.16
         with:
           token: ${{ secrets.TOKEN }}
           owner: meikooy
